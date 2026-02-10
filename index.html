@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tony Link Organizer - Save and organize your favorite websites into custom boxes. Free and easy to use.">
+    <meta name="keywords" content="link organizer, bookmarks, save links, website organizer">
+    <title>Tony Link Organizer - Save Your Favorite Websites</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo-link">
+            <img src="images/logo.jpg" alt="Cat Pillow Logo" width="50" height="50" style="vertical-align: middle; margin-right: 10px;">
+            <h1 style="display: inline; vertical-align: middle;">Tony Link Organizer</h1>
+        </a>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="help.html">Help</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Welcome to Tony Link Organizer!</h2>
+        <img src="images/mista.jpg" alt="Illustration showing organized folders and bookmarks on a computer screen" width="400" style="max-width: 100%; display: block; margin: 20px auto;">
+        <p>This is a simple barebones website where you can save and organize your favorite links.</p>
+
+        <div class="form-box">
+            <h3>Create a New Box</h3>
+            <form id="boxForm">
+                <label>Box Name:</label><br>
+                <input type="text" id="boxName" placeholder="Enter box name"><br><br>
+                <button type="submit">Create Box</button>
+            </form>
+        </div>
+
+        <div class="form-box">
+            <h3>Add a Link</h3>
+            <form id="linkForm">
+                <label>Select Box:</label><br>
+                <select id="selectBox">
+                    <option value="">-- Select a box --</option>
+                </select><br><br>
+                
+                <label>Link Name:</label><br>
+                <input type="text" id="linkName" placeholder="Enter link name"><br><br>
+                
+                <label>URL:</label><br>
+                <input type="text" id="linkUrl" placeholder="https://example.com"><br><br>
+                
+                <button type="submit">Add Link</button>
+            </form>
+        </div>
+
+        <h3>My Link Boxes</h3>
+        <div id="boxesContainer">
+            <p id="noBoxes">No boxes yet. Create one above!</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>Tony Link Organizer</p>
+        <p>
+            <a href="index.html">Home</a> | 
+            <a href="about.html">About</a> | 
+            <a href="contact.html">Contact</a>
+        </p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

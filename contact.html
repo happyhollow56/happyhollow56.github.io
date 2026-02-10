@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact Tony Link Organizer - Send us a message or question.">
+    <title>Contact - Tony Link Organizer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo-link">
+            <img src="images/logo.jpg" alt="Cat Pillow Logo" width="50" height="50" style="vertical-align: middle; margin-right: 10px;">
+            <h1 style="display: inline; vertical-align: middle;">Tony Link Organizer</h1>
+        </a>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="help.html">Help</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Contact Me</h2>
+        <p>Have a question or suggestion? Send me a message!</p>
+
+        <form id="contactForm">
+            <label>Your Name:</label><br>
+            <input type="text" id="contactName" placeholder="Enter your name"><br><br>
+
+            <label>Your Email:</label><br>
+            <input type="email" id="contactEmail" placeholder="your@email.com"><br><br>
+
+            <label>Subject:</label><br>
+            <input type="text" id="contactSubject" placeholder="What's this about?"><br><br>
+
+            <label>Message:</label><br>
+            <textarea id="contactMessage" rows="5" cols="40" placeholder="Type your message here..."></textarea><br><br>
+
+            <button type="submit">Send Message</button>
+        </form>
+
+        <p id="formMessage" style="color: green; display: none;">Thanks for your message! I'll get back to you soon.</p>
+
+        <h3>Other Ways to Reach Me</h3>
+        <p>Email: <a href="mailto:jcraig162@ivytech.edu">jcraig162@ivytech.edu</a></p>
+    </main>
+
+    <footer>
+        <p>Tony Link Organizer</p>
+        <p>
+            <a href="index.html">Home</a> | 
+            <a href="about.html">About</a> | 
+            <a href="contact.html">Contact</a>
+        </p>
+    </footer>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            var name = document.getElementById('contactName').value.trim();
+            var email = document.getElementById('contactEmail').value.trim();
+            var subject = document.getElementById('contactSubject').value.trim();
+            var message = document.getElementById('contactMessage').value.trim();
+
+            if (name === "" || email === "" || subject === "" || message === "") {
+                alert("Please fill in all fields!");
+                return;
+            }
+
+            var body = 'Name: ' + name + '\nEmail: ' + email + '\n\n' + message;
+            var mailto = 'mailto:jcraig162@ivytech.edu'
+                       + '?subject=' + encodeURIComponent(subject)
+                       + '&body=' + encodeURIComponent(body);
+
+            window.location.href = mailto;
+
+            document.getElementById('formMessage').style.display = 'block';
+            document.getElementById('contactForm').reset();
+        });
+    </script>
+</body>
+</html>
