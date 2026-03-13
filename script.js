@@ -11,46 +11,54 @@ var body = document.body;
 var savedDarkMode = localStorage.getItem('darkMode');
 if(savedDarkMode === 'true') {
     body.classList.add('dark-mode');
-    darkModeToggle.textContent = '☀️';
+    if(darkModeToggle) darkModeToggle.textContent = '☀️';
 }
 
 // Load saved theme color
 var savedThemeColor = localStorage.getItem('themeColor');
 if(savedThemeColor) {
     setThemeColor(savedThemeColor);
-    customColorPicker.value = savedThemeColor;
+    if(customColorPicker) customColorPicker.value = savedThemeColor;
 }
 
 // Dark mode toggle
-darkModeToggle.addEventListener('click', function() {
-    body.classList.toggle('dark-mode');
+if(darkModeToggle) {
+    darkModeToggle.addEventListener('click', function() {
+        body.classList.toggle('dark-mode');
 
-    if(body.classList.contains('dark-mode')) {
-        darkModeToggle.textContent = '☀️';
-        localStorage.setItem('darkMode', 'true');
-    } else {
-        darkModeToggle.textContent = '🌙';
-        localStorage.setItem('darkMode', 'false');
-    }
-});
+        if(body.classList.contains('dark-mode')) {
+            darkModeToggle.textContent = '☀️';
+            localStorage.setItem('darkMode', 'true');
+        } else {
+            darkModeToggle.textContent = '🌙';
+            localStorage.setItem('darkMode', 'false');
+        }
+    });
+}
 
 // Color picker toggle
-colorPickerToggle.addEventListener('click', function() {
-    themePicker.classList.toggle('show');
-});
+if(colorPickerToggle) {
+    colorPickerToggle.addEventListener('click', function() {
+        if(themePicker) themePicker.classList.toggle('show');
+    });
+}
 
 // Close color picker when clicking outside
-document.addEventListener('click', function(event) {
-    if (!themePicker.contains(event.target) && event.target !== colorPickerToggle) {
-        themePicker.classList.remove('show');
-    }
-});
+if(themePicker) {
+    document.addEventListener('click', function(event) {
+        if (!themePicker.contains(event.target) && event.target !== colorPickerToggle) {
+            themePicker.classList.remove('show');
+        }
+    });
+}
 
 // Custom color picker
-customColorPicker.addEventListener('input', function() {
-    setThemeColor(this.value);
-    localStorage.setItem('themeColor', this.value);
-});
+if(customColorPicker) {
+    customColorPicker.addEventListener('input', function() {
+        setThemeColor(this.value);
+        localStorage.setItem('themeColor', this.value);
+    });
+}
 
 // Preset colors
 var presetColors = document.querySelectorAll('.preset-color');
@@ -58,7 +66,7 @@ presetColors.forEach(function(preset) {
     preset.addEventListener('click', function() {
         var color = this.getAttribute('data-color');
         setThemeColor(color);
-        customColorPicker.value = color;
+        if(customColorPicker) customColorPicker.value = color;
         localStorage.setItem('themeColor', color);
     });
 });
