@@ -2,17 +2,29 @@
 var boxes = [];
 
 var darkModeToggle = document.getElementById('darkModeToggle');
+var colorPickerToggle = document.getElementById('colorPickerToggle');
+var themePicker = document.getElementById('themePicker');
+var customColorPicker = document.getElementById('customColorPicker');
 var body = document.body;
 
+// Load saved dark mode
 var savedDarkMode = localStorage.getItem('darkMode');
 if(savedDarkMode === 'true') {
     body.classList.add('dark-mode');
     darkModeToggle.textContent = '☀️';
 }
 
+// Load saved theme color
+var savedThemeColor = localStorage.getItem('themeColor');
+if(savedThemeColor) {
+    setThemeColor(savedThemeColor);
+    customColorPicker.value = savedThemeColor;
+}
+
+// Dark mode toggle
 darkModeToggle.addEventListener('click', function() {
     body.classList.toggle('dark-mode');
-    
+
     if(body.classList.contains('dark-mode')) {
         darkModeToggle.textContent = '☀️';
         localStorage.setItem('darkMode', 'true');
@@ -21,6 +33,64 @@ darkModeToggle.addEventListener('click', function() {
         localStorage.setItem('darkMode', 'false');
     }
 });
+
+// Color picker toggle
+colorPickerToggle.addEventListener('click', function() {
+    themePicker.classList.toggle('show');
+});
+
+// Close color picker when clicking outside
+document.addEventListener('click', function(event) {
+    if (!themePicker.contains(event.target) && event.target !== colorPickerToggle) {
+        themePicker.classList.remove('show');
+    }
+});
+
+// Custom color picker
+customColorPicker.addEventListener('input', function() {
+    setThemeColor(this.value);
+    localStorage.setItem('themeColor', this.value);
+});
+
+// Preset colors
+var presetColors = document.querySelectorAll('.preset-color');
+presetColors.forEach(function(preset) {
+    preset.addEventListener('click', function() {
+        var color = this.getAttribute('data-color');
+        setThemeColor(color);
+        customColorPicker.value = color;
+        localStorage.setItem('themeColor', color);
+    });
+});
+
+function setThemeColor(color) {
+    document.documentElement.style.setProperty('--primary-color', color);
+    
+    // Calculate hover color (darker)
+    var hoverColor = adjustColor(color, -20);
+    document.documentElement.style.setProperty('--primary-hover', hoverColor);
+    
+    // Calculate light color (lighter)
+    var lightColor = adjustColor(color, 20);
+    document.documentElement.style.setProperty('--primary-light', lightColor);
+    
+    // Calculate light hover color (even lighter)
+    var lightHoverColor = adjustColor(color, 40);
+    document.documentElement.style.setProperty('--primary-light-hover', lightHoverColor);
+}
+
+function adjustColor(color, amount) {
+    var hex = color.replace('#', '');
+    var r = parseInt(hex.substring(0, 2), 16);
+    var g = parseInt(hex.substring(2, 4), 16);
+    var b = parseInt(hex.substring(4, 6), 16);
+    
+    r = Math.max(0, Math.min(255, r + amount));
+    g = Math.max(0, Math.min(255, g + amount));
+    b = Math.max(0, Math.min(255, b + amount));
+    
+    return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+}
 
 window.onload = function() {
     var savedBoxes = localStorage.getItem('myBoxes');
