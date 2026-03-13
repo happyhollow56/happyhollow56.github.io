@@ -71,6 +71,14 @@ presetColors.forEach(function(preset) {
     });
 });
 
+// Search functionality
+var boxSearch = document.getElementById('boxSearch');
+if(boxSearch) {
+    boxSearch.addEventListener('input', function() {
+        displayBoxes(this.value.toLowerCase());
+    });
+}
+
 function setThemeColor(color) {
     document.documentElement.style.setProperty('--primary-color', color);
     
@@ -192,7 +200,7 @@ document.getElementById('linkForm').addEventListener('submit', function(e) {
     alert("Link added successfully!");
 });
 
-function displayBoxes() {
+function displayBoxes(filter = '') {
     var container = document.getElementById('boxesContainer');
     
     if(boxes.length == 0) {
@@ -203,7 +211,11 @@ function displayBoxes() {
     var html = '';
     
     for(var i = 0; i < boxes.length; i++) {
-        html += '<div class="link-box">';
+        if(filter && boxes[i].name.toLowerCase().indexOf(filter) === -1) {
+            continue;
+        }
+        
+        html += '<div class="link-box" draggable="true" data-box-id="' + boxes[i].id + '">';
         html += '<h4>' + boxes[i].name + 
                 ' <button class="delete-box-btn" onclick="deleteBox(' + boxes[i].id + ')">Delete Box</button></h4>';
         
@@ -214,6 +226,7 @@ function displayBoxes() {
             for(var j = 0; j < boxes[i].links.length; j++) {
                 html += '<li>';
                 html += '<a href="' + boxes[i].links[j].url + '" target="_blank">' + boxes[i].links[j].name + '</a>';
+                html += ' <button class="edit-btn" onclick="editLink(' + boxes[i].id + ', ' + j + ')">Edit</button>';
                 html += ' <button class="delete-btn" onclick="deleteLink(' + boxes[i].id + ', ' + j + ')">Remove</button>';
                 html += '</li>';
             }
@@ -224,6 +237,9 @@ function displayBoxes() {
     }
     
     container.innerHTML = html;
+    
+    // Add drag and drop listeners
+    addDragAndDrop();
 }
 
 function updateSelectBox() {
@@ -266,4 +282,77 @@ function deleteLink(boxId, linkIndex) {
     
     saveBoxes();
     displayBoxes();
+}
+
+function editLink(boxId, linkIndex) {
+    for(var i = 0; i < boxes.length; i++) {
+        if(boxes[i].id == boxId) {
+            var link = boxes[i].links[linkIndex];
+            var newName = prompt("Edit link name:", link.name);
+            if(newName === null) return;
+            var newUrl = prompt("Edit link URL:", link.url);
+            if(newUrl === null) return;
+            
+            newName = newName.trim();
+            newUrl = newUrl.trim();
+            
+            if(newName == "") {
+                alert("Link name cannot be empty!");
+                return;
+            }
+            
+            if(newUrl == "") {
+                alert("URL cannot be empty!");
+                return;
+            }
+            
+            if(!newUrl.startsWith('http://') && !newUrl.startsWith('https://')) {
+                newUrl = 'https://' + newUrl;
+            }
+            
+            boxes[i].links[linkIndex] = { name: newName, url: newUrl };
+            saveBoxes();
+            displayBoxes();
+            return;
+        }
+    }
+}
+
+function addDragAndDrop() {
+    var linkBoxes = document.querySelectorAll('.link-box');
+    var draggedElement = null;
+    
+    linkBoxes.forEach(function(box) {
+        box.addEventListener('dragstart', function(e) {
+            draggedElement = this;
+            this.style.opacity = '0.5';
+        });
+        
+        box.addEventListener('dragend', function(e) {
+            this.style.opacity = '1';
+            draggedElement = null;
+        });
+        
+        box.addEventListener('dragover', function(e) {
+            e.preventDefault();
+        });
+        
+        box.addEventListener('drop', function(e) {
+            e.preventDefault();
+            if(draggedElement && draggedElement !== this) {
+                var draggedId = parseInt(draggedElement.getAttribute('data-box-id'));
+                var targetId = parseInt(this.getAttribute('data-box-id'));
+                
+                var draggedIndex = boxes.findIndex(b => b.id === draggedId);
+                var targetIndex = boxes.findIndex(b => b.id === targetId);
+                
+                // Reorder the array
+                var draggedBox = boxes.splice(draggedIndex, 1)[0];
+                boxes.splice(targetIndex, 0, draggedBox);
+                
+                saveBoxes();
+                displayBoxes();
+            }
+        });
+    });
 }

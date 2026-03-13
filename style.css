@@ -277,6 +277,18 @@ h3 {
     margin-top: 25px;
 }
 
+.search-container {
+    margin: 10px 0;
+}
+
+#boxSearch {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
 p {
     line-height: 1.6;
 }
@@ -335,6 +347,7 @@ button:hover {
     border-radius: 5px;
     padding: 15px;
     margin-bottom: 20px;
+    cursor: move;
 }
 
 .link-box h4 {
@@ -367,6 +380,21 @@ button:hover {
 
 .delete-btn:hover {
     background-color: #c0392b;
+}
+
+.edit-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 12px;
+    margin-left: 10px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.edit-btn:hover {
+    background-color: var(--primary-hover);
 }
 
 .delete-box-btn {
