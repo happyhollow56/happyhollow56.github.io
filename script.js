@@ -1,6 +1,27 @@
 
 var boxes = [];
 
+var darkModeToggle = document.getElementById('darkModeToggle');
+var body = document.body;
+
+var savedDarkMode = localStorage.getItem('darkMode');
+if(savedDarkMode === 'true') {
+    body.classList.add('dark-mode');
+    darkModeToggle.textContent = '☀️';
+}
+
+darkModeToggle.addEventListener('click', function() {
+    body.classList.toggle('dark-mode');
+    
+    if(body.classList.contains('dark-mode')) {
+        darkModeToggle.textContent = '☀️';
+        localStorage.setItem('darkMode', 'true');
+    } else {
+        darkModeToggle.textContent = '🌙';
+        localStorage.setItem('darkMode', 'false');
+    }
+});
+
 window.onload = function() {
     var savedBoxes = localStorage.getItem('myBoxes');
     if(savedBoxes) {

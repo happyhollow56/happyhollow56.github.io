@@ -7,6 +7,117 @@ body {
     color: #333;
     font-size: 16px;
     line-height: 1.5;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Dark mode styles */
+body.dark-mode {
+    background-color: #1a1a2e;
+    color: #eaeaea;
+}
+
+body.dark-mode header {
+    background-color: #16213e;
+}
+
+body.dark-mode main {
+    background-color: #0f3460;
+}
+
+body.dark-mode .form-box {
+    background-color: #1a1a2e;
+    border-color: #0f3460;
+}
+
+body.dark-mode .link-box {
+    background-color: #1a1a2e;
+    border-color: #0f3460;
+}
+
+body.dark-mode input[type="text"],
+body.dark-mode input[type="email"],
+body.dark-mode select,
+body.dark-mode textarea {
+    background-color: #16213e;
+    border-color: #0f3460;
+    color: #eaeaea;
+}
+
+body.dark-mode button {
+    background-color: #0f3460;
+}
+
+body.dark-mode button:hover {
+    background-color: #1a4a7a;
+}
+
+body.dark-mode a {
+    color: #4da8ff;
+}
+
+body.dark-mode a:hover {
+    color: #7dc2ff;
+}
+
+body.dark-mode h2 {
+    color: #4da8ff;
+    border-bottom-color: #4da8ff;
+}
+
+body.dark-mode h3 {
+    color: #eaeaea;
+}
+
+body.dark-mode .link-box h4 {
+    color: #4da8ff;
+    border-bottom-color: #0f3460;
+}
+
+body.dark-mode footer {
+    background-color: #0f3460;
+}
+
+body.dark-mode footer a {
+    color: #4da8ff;
+}
+
+body.dark-mode tr:nth-child(even) {
+    background-color: #16213e;
+}
+
+body.dark-mode th {
+    background-color: #0f3460;
+}
+
+/* Dark mode toggle button */
+.dark-mode-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    font-size: 24px;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s;
+}
+
+.dark-mode-toggle:hover {
+    background-color: #357abd;
+}
+
+body.dark-mode .dark-mode-toggle {
+    background-color: #ffd700;
+    color: #333;
+}
+
+body.dark-mode .dark-mode-toggle:hover {
+    background-color: #ffed4a;
 }
 
 header {
