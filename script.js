@@ -73,9 +73,11 @@ presetColors.forEach(function(preset) {
 
 // Search functionality
 var boxSearch = document.getElementById('boxSearch');
+var currentFilter = '';
 if(boxSearch) {
     boxSearch.addEventListener('input', function() {
-        displayBoxes(this.value.toLowerCase());
+        currentFilter = this.value.toLowerCase();
+        displayBoxes(currentFilter);
     });
 }
 
@@ -112,7 +114,7 @@ window.onload = function() {
     var savedBoxes = localStorage.getItem('myBoxes');
     if(savedBoxes) {
         boxes = JSON.parse(savedBoxes);
-        displayBoxes();
+        displayBoxes(currentFilter);
         updateSelectBox();
     }
 };
@@ -147,7 +149,7 @@ document.getElementById('boxForm').addEventListener('submit', function(e) {
     boxes.push(newBox);
     
     saveBoxes();
-    displayBoxes();
+    displayBoxes(currentFilter);
     updateSelectBox();
     
     document.getElementById('boxName').value = "";
@@ -192,7 +194,7 @@ document.getElementById('linkForm').addEventListener('submit', function(e) {
     }
     
     saveBoxes();
-    displayBoxes();
+    displayBoxes(currentFilter);
     
     document.getElementById('linkName').value = "";
     document.getElementById('linkUrl').value = "";
@@ -268,7 +270,7 @@ function deleteBox(boxId) {
     }
     
     saveBoxes();
-    displayBoxes();
+    displayBoxes(currentFilter);
     updateSelectBox();
 }
 
@@ -281,7 +283,7 @@ function deleteLink(boxId, linkIndex) {
     }
     
     saveBoxes();
-    displayBoxes();
+    displayBoxes(currentFilter);
 }
 
 function editLink(boxId, linkIndex) {
@@ -312,7 +314,7 @@ function editLink(boxId, linkIndex) {
             
             boxes[i].links[linkIndex] = { name: newName, url: newUrl };
             saveBoxes();
-            displayBoxes();
+            displayBoxes(currentFilter);
             return;
         }
     }
@@ -351,7 +353,7 @@ function addDragAndDrop() {
                 boxes.splice(targetIndex, 0, draggedBox);
                 
                 saveBoxes();
-                displayBoxes();
+                displayBoxes(currentFilter);
             }
         });
     });
